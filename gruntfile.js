@@ -72,6 +72,7 @@ module.exports = function (grunt) {
                 'component/angular-meetup.js',
                 'component/controllers/**/*.js',
                 'component/directives/**/*.js',
+                'component/providers/**/*.js',
                 'component/**/*.html',
                 'component/assets/**/*.css',
                 'tests/unit/**/*.js'

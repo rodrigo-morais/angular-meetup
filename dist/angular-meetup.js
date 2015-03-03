@@ -1,3 +1,5 @@
+var rmMeetup = angular.module('rmMeetup', ['ngSanitize']);
+
 rmMeetup.provider("consumer", function(){
     var key = '',
         secret = '',
