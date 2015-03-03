@@ -6,7 +6,7 @@ module.exports = function (grunt) {
         },
         ngtemplates:  {
             options: {
-                module: 'Meetup'
+                module: 'rmMeetup'
             },
             app:  {
                 src:      'component/templates/**.html',
