@@ -32,4 +32,13 @@ describe('Unit test to use Meetup.com API', function() {
     expect(provider.redirect_uri).toBe('new_redirect_uri');
   });
 
+  it('Verify if element created correctly', function() {
+    var element = $compile("<rm-meetup-oauth>Meetup</rm-meetup-oauth>")($rootScope),
+        meetupReturn = '<span class="ng-scope">Meetup</span>';
+    
+    $rootScope.$digest();
+    
+    expect(element.html()).toContain(meetupReturn);
+  });
+
 });

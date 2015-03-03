@@ -1,4 +1,6 @@
 (function() {
+    'use strict';
+    
     rmMeetup.directive('rmMeetupOauth',
     [rmMeetupOauthDirective]);
 
