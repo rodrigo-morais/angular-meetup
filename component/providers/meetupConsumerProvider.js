@@ -1,10 +1,15 @@
 (function() {
     'use strict';
 
-    rmMeetup.provider("consumer", function(){
+    rmMeetup.provider("rmConsumer", function(){
         var key = '',
             secret = '',
-            redirect_uri = '';
+            redirect_uri = '',
+            authorize_uri = 'https://secure.meetup.com/oauth2/authorize/?response_type=token&';
+
+        this.setAuthorizeURI = function(_uri){
+            this.authorize_uri = _uri;
+        };
 
         this.setKey = function(_key){
             this.key = _key;
@@ -19,10 +24,17 @@
         };
 
         this.$get = function(){
+            if( this.authorize_uri === undefined ||
+                this.authorize_uri === ''){
+                this.authorize_uri = 'https://secure.meetup.com/oauth2/authorize/?response_type=token&';
+            }
+
+
             return{
                 key: this.key,
                 secret: this.secret,
-                redirect_uri: this.redirect_uri
+                redirect_uri: this.redirect_uri,
+                authorize_uri: this.authorize_uri + '&client_id=' + this.key + '&redirect_uri=' + this.redirect_uri
             };
         };
     });

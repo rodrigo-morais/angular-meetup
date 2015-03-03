@@ -4,8 +4,8 @@ describe('Unit test to use Meetup.com API', function() {
       $timeout,
       provider;
 
-  beforeEach(module('rmMeetup', function(consumerProvider){
-    provider = consumerProvider;
+  beforeEach(module('rmMeetup', function(rmConsumerProvider){
+    provider = rmConsumerProvider;
   }));
 
   beforeEach(inject(function(_$compile_, _$rootScope_, _$timeout_){

@@ -73,6 +73,7 @@ module.exports = function (grunt) {
                 'component/controllers/**/*.js',
                 'component/directives/**/*.js',
                 'component/providers/**/*.js',
+                'component/services/**/*.js',
                 'component/**/*.html',
                 'component/assets/**/*.css',
                 'tests/unit/**/*.js'
