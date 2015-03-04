@@ -5,7 +5,7 @@
         var key = '',
             secret = '',
             redirect_uri = '',
-            authorize_uri = 'https://secure.meetup.com/oauth2/authorize/?response_type=token&';
+            authorize_uri = 'https://secure.meetup.com/oauth2/authorize/?response_type=token&scope=ageless';
 
         this.setAuthorizeURI = function(_uri){
             this.authorize_uri = _uri;
@@ -26,7 +26,7 @@
         this.$get = function(){
             if( this.authorize_uri === undefined ||
                 this.authorize_uri === ''){
-                this.authorize_uri = 'https://secure.meetup.com/oauth2/authorize/?response_type=token&';
+                this.authorize_uri = 'https://secure.meetup.com/oauth2/authorize/?response_type=token&scope=ageless';
             }
 
 
