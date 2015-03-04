@@ -37,7 +37,7 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
 
     function rmMeetupOauthDirective($window, rmConsumer) {
 
-        var requestAuthorization = function() {
+        var _requestAuthorization = function() {
             var width = 500,
                 height = 350,
                 top = (screen.height - height)/2,
@@ -59,7 +59,7 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
             controller: 'rmMeetupOauthController',
             link: function (scope, element, attrs, controller) {
                 element.on('click', function(){
-                    requestAuthorization();
+                    _requestAuthorization();
                 });
             }
         };

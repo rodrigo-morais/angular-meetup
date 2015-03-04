@@ -2,16 +2,18 @@ describe('Unit test to use Meetup.com API', function() {
   var $compile,
       $rootScope,
       $timeout,
+      $window,
       provider;
 
   beforeEach(module('rmMeetup', function(rmConsumerProvider){
     provider = rmConsumerProvider;
   }));
 
-  beforeEach(inject(function(_$compile_, _$rootScope_, _$timeout_){
+  beforeEach(inject(function(_$compile_, _$rootScope_, _$timeout_, _$window_){
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $timeout = _$timeout_;
+    $window = _$window_;
   }));
 
   it('Verify if "key" property is modified in provider', function() {
@@ -39,6 +41,22 @@ describe('Unit test to use Meetup.com API', function() {
     $rootScope.$digest();
     
     expect(element.html()).toContain(meetupReturn);
+  });
+
+  it('Verify if element created correctly', function() {
+    var element = $compile("<rm-meetup-oauth>Meetup</rm-meetup-oauth>")($rootScope),
+        link;
+
+    //spyOn($.fn, "_requestAuthorization");
+    spyOn($window, 'open');
+    
+    $rootScope.$digest();
+
+    link = $(element).find('a')[0];
+
+    element[0].click();
+    
+    expect($window.open).toHaveBeenCalled();
   });
 
 });
