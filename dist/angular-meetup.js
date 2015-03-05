@@ -25,7 +25,7 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
     ['$q', '$scope', 'rmMeetupOauthService', rmMeetupOauthController]);
 
     function rmMeetupOauthController($q, $scope, rmMeetupOauthService){
-
+        
     }
 
 })();
@@ -33,19 +33,9 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
     'use strict';
     
     rmMeetup.directive('rmMeetupOauth',
-    ['$window', 'rmConsumer',rmMeetupOauthDirective]);
+    ['$window', 'rmConsumer', 'rmOauthAccess',rmMeetupOauthDirective]);
 
-    function rmMeetupOauthDirective($window, rmConsumer) {
-
-        $window.onMeetupAuth = function(tok) {
-            console.log('onMeetupAuth');
-            console.log(tok);
-        };
-
-        $window.onMeetupDenial = function(err) {
-            console.log('onMeetupDenial');
-            console.log(err);
-        };
+    function rmMeetupOauthDirective($window, rmConsumer, rmOauthAccess) {
 
         var _requestAuthorization = function() {
             var width = 500,
@@ -96,9 +86,23 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
             templateUrl: html,
             replace: true,
             transclude: true,
+            scope: {
+                refreshToken: '&'
+            },
             controller: 'rmMeetupOauthController',
             link: function (scope, element, attrs, controller) {
+                $window.onMeetupAuth = function(tok, expiresIn) {
+                    if(scope.refreshToken){
+                        scope.refreshToken({token:tok, expiresIn: expiresIn});
+                    }
+                };
+
+                $window.onMeetupDenial = function(err) {
+                    console.log(err);
+                };
+
                 _isAuthorized();
+
                 element.on('click', function(){
                     _requestAuthorization();
                 });
@@ -144,6 +148,29 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
                 secret: this.secret,
                 redirect_uri: this.redirect_uri,
                 authorize_uri: this.authorize_uri + '&client_id=' + this.key + '&redirect_uri=' + this.redirect_uri
+            };
+        };
+    });
+})();
+(function() {
+    'use strict';
+
+    rmMeetup.provider("rmOauthAccess", function(){
+        var access_token = '',
+            expires_in = '';
+
+        this.setAccessToken = function(_token){
+            this.access_token = _token;
+        };
+
+        this.setExpiresIn = function(_expires){
+            this.expires_in = _expires;
+        };
+
+        this.$get = function(){
+            return{
+                accessToken: this.access_token,
+                expiresIn: this.expires_in
             };
         };
     });

@@ -43,11 +43,10 @@ describe('Unit test to use Meetup.com API', function() {
     expect(element.html()).toContain(meetupReturn);
   });
 
-  it('Verify if element created correctly', function() {
+  it('Verify if window with Meetup login was called', function() {
     var element = $compile("<rm-meetup-oauth>Meetup</rm-meetup-oauth>")($rootScope),
         link;
 
-    //spyOn($.fn, "_requestAuthorization");
     spyOn($window, 'open');
     
     $rootScope.$digest();
@@ -57,6 +56,19 @@ describe('Unit test to use Meetup.com API', function() {
     element[0].click();
     
     expect($window.open).toHaveBeenCalled();
+  });
+
+  it('Verify if refreshToken function was called when method onMeetupAuth from window was executed', function() {
+    var element = $compile("<rm-meetup-oauth>Meetup</rm-meetup-oauth>")($rootScope),
+        link;
+
+    $rootScope.$digest();
+
+    spyOn(element.isolateScope(), 'refreshToken');
+
+    $window.onMeetupAuth('token', 'expiresIn');
+    
+    expect(element.isolateScope().refreshToken).toHaveBeenCalled();
   });
 
 });

@@ -17,6 +17,19 @@ var app = angular.module('myApp', ['rmMeetup'])
     app.controller(controllerId, ['$scope', meetupontroller]);
 
     function meetupontroller($scope){
-        
+        $scope.token = '';
+        $scope.expiresIn = '';
+
+        $scope.refresh = function(token, expiresIn){
+            $scope.$apply(function() {
+                $scope.token = token;
+                $scope.expiresIn = expiresIn;
+            });
+        }
+
+        $scope.clear = function(){
+            $scope.token = '';
+            $scope.expiresIn = '';
+        }
     }
 })();

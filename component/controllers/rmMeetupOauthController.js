@@ -5,7 +5,7 @@
     ['$q', '$scope', 'rmMeetupOauthService', rmMeetupOauthController]);
 
     function rmMeetupOauthController($q, $scope, rmMeetupOauthService){
-
+        
     }
 
 })();

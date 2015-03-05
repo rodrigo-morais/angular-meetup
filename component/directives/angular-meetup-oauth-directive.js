@@ -2,19 +2,9 @@
     'use strict';
     
     rmMeetup.directive('rmMeetupOauth',
-    ['$window', 'rmConsumer',rmMeetupOauthDirective]);
+    ['$window', 'rmConsumer', 'rmOauthAccess',rmMeetupOauthDirective]);
 
-    function rmMeetupOauthDirective($window, rmConsumer) {
-
-        $window.onMeetupAuth = function(tok) {
-            console.log('onMeetupAuth');
-            console.log(tok);
-        };
-
-        $window.onMeetupDenial = function(err) {
-            console.log('onMeetupDenial');
-            console.log(err);
-        };
+    function rmMeetupOauthDirective($window, rmConsumer, rmOauthAccess) {
 
         var _requestAuthorization = function() {
             var width = 500,
@@ -65,9 +55,23 @@
             templateUrl: html,
             replace: true,
             transclude: true,
+            scope: {
+                refreshToken: '&'
+            },
             controller: 'rmMeetupOauthController',
             link: function (scope, element, attrs, controller) {
+                $window.onMeetupAuth = function(tok, expiresIn) {
+                    if(scope.refreshToken){
+                        scope.refreshToken({token:tok, expiresIn: expiresIn});
+                    }
+                };
+
+                $window.onMeetupDenial = function(err) {
+                    console.log(err);
+                };
+
                 _isAuthorized();
+
                 element.on('click', function(){
                     _requestAuthorization();
                 });
