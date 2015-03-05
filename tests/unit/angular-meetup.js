@@ -3,23 +3,31 @@ describe('Unit test to use Meetup.com API', function() {
       $rootScope,
       $timeout,
       $window,
-      rmConsumer;
+      rmConsumer,
+      rmOauthAccessService,
+      oauthAccess;
 
   beforeEach(module('rmMeetup', function(rmConsumerProvider){
     rmConsumer = rmConsumerProvider;
   }));
 
-  beforeEach(inject(function(_$compile_, _$rootScope_, _$timeout_, _$window_){
+  beforeEach(inject(function(_$compile_, _$rootScope_, _$timeout_, _$window_, $injector, _OauthAccess_, _rmMeetupOauthService_){
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $timeout = _$timeout_;
     $window = _$window_;
+
+    oauthAccess = _OauthAccess_;
+    oauthAccess.tokenAccess = '';
+    oauthAccess.expiresIn = '';
+
+    rmOauthAccessService = _rmMeetupOauthService_;
   }));
 
-  it('Verify if OauthAccess value has token and expiresId property with blank value', inject(function ($injector) {
-    expect($injector.get("OauthAccess").tokenAccess).toBe("");
-    expect($injector.get("OauthAccess").expiresId).toBe("");
-  }));
+  it('Verify if OauthAccess value has token and expiresIn property with blank value', function () {
+    expect(oauthAccess.tokenAccess).toBe("");
+    expect(oauthAccess.expiresIn).toBe("");
+  });
 
   it('Verify if "key" property is modified in provider', function() {
     rmConsumer.setKey('new_key');
@@ -67,7 +75,7 @@ describe('Unit test to use Meetup.com API', function() {
     var element,
         scope = $rootScope.$new();
 
-    scope.refresh = function(token, expiresId){};
+    scope.refresh = function(token, expiresIn){};
 
     element = $compile("<rm-meetup-oauth refresh-token='refresh(token, expiresIn)'>Meetup</rm-meetup-oauth>")(scope);
 
@@ -80,7 +88,7 @@ describe('Unit test to use Meetup.com API', function() {
     expect(element.isolateScope().refreshToken).toHaveBeenCalled();
   });
 
-  it('Verify if properties from OauthAccess value was changed', inject(function ($injector) {
+  it('Verify if properties from OauthAccess value was changed', function () {
     var element,
         scope = $rootScope.$new();
 
@@ -92,8 +100,32 @@ describe('Unit test to use Meetup.com API', function() {
 
     $window.onMeetupAuth('123', '2222');
 
-    expect($injector.get("OauthAccess").tokenAccess).toBe("123");
-    expect($injector.get("OauthAccess").expiresIn).toBe("2222");
-  }));
+    expect(oauthAccess.tokenAccess).toBe("123");
+    expect(oauthAccess.expiresIn).toBe("2222");
+  });
+
+  it('Verify if properties from OauthAccess is in initial state when called from service', function () {
+    var oauthAccessService = rmOauthAccessService.getOauthAccess();
+
+    expect(oauthAccessService.tokenAccess).toBe("");
+    expect(oauthAccessService.expiresIn).toBe("");
+  });
+
+  it('Verify if properties from OauthAccess is correct when called from service and after authorize directive executed', function () {
+    var element,
+        scope = $rootScope.$new(),
+        oauthAccessService = rmOauthAccessService.getOauthAccess();
+
+    scope.refresh = function(token, expiresIn){};
+
+    element = $compile("<rm-meetup-oauth refresh-token='refresh(token, expiresIn)'>Meetup</rm-meetup-oauth>")(scope);
+
+    scope.$digest();
+
+    $window.onMeetupAuth('123', '2222');
+
+    expect(oauthAccessService.tokenAccess).toBe("123");
+    expect(oauthAccessService.expiresIn).toBe("2222");
+  });
 
 });
