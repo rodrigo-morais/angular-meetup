@@ -7,4 +7,8 @@ var rmMeetup = angular.module('rmMeetup', ['ngSanitize', 'ngResource'])
                                 delete $httpProvider.defaults.headers.common['X-Requested-With'];
                             }
                         ]
-                    );
+                    )
+                    .value('OauthAccess', {
+                        tokenAccess: '',
+                        expiresId: ''
+                    });

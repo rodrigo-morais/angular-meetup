@@ -2,9 +2,9 @@
     'use strict';
     
     rmMeetup.directive('rmMeetupOauth',
-    ['$window', 'rmConsumer', 'rmOauthAccess',rmMeetupOauthDirective]);
+    ['$window', 'rmConsumer', 'OauthAccess',rmMeetupOauthDirective]);
 
-    function rmMeetupOauthDirective($window, rmConsumer, rmOauthAccess) {
+    function rmMeetupOauthDirective($window, rmConsumer, OauthAccess) {
 
         var _requestAuthorization = function() {
             var width = 500,
@@ -61,6 +61,9 @@
             controller: 'rmMeetupOauthController',
             link: function (scope, element, attrs, controller) {
                 $window.onMeetupAuth = function(tok, expiresIn) {
+                    OauthAccess.tokenAccess = tok;
+                    OauthAccess.expiresIn = expiresIn;
+
                     if(scope.refreshToken){
                         scope.refreshToken({token:tok, expiresIn: expiresIn});
                     }
