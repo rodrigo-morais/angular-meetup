@@ -19,6 +19,53 @@
             <button data-ng:click="clear()">CLEAR</button>
             <br />
             <button data-ng:click="refreshOauthAccess()">Refresh Oauth Access</button>
+            <br />
+            <br />
+            <table data-ng:if="member != null">
+                <thead>
+                    <tr>
+                        <th colspan="2" style="text-align: center; border:solid 1px #000000">
+                            Member
+                        </th>
+                    </tr>
+                    <tr>
+                        <th style="text-align: left; min-width: 100px; border:solid 1px #000000">
+                            Field
+                        </th>
+                        <th style="text-align: left; min-width: 100px; border:solid 1px #000000">
+                            Value
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Id</td>
+                        <td>{{member.id}}</td>
+                    </tr>
+                    <tr>
+                        <td>Name</td>
+                        <td>{{member.name}}</td>
+                    </tr>
+                    <tr>
+                        <td>Country</td>
+                        <td>{{member.country}}</td>
+                    </tr>
+                    <tr>
+                        <td>City</td>
+                        <td>{{member.city}}</td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td>{{member.status}}</td>
+                    </tr>
+                    <tr>
+                        <td>Photo</td>
+                        <td>
+                            <img data-ng:src="{{member.photo.photo_link}}" alt="photo" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <script src="vendor/angular/angular.js"></script>
         <script src="vendor/angular-sanitize/angular-sanitize.js"></script>

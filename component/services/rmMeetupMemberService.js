@@ -19,7 +19,7 @@
                         access_token: access_token
                     }
                 )
-                .$post
+                .$promise
                 .then(function(member){
                     deferred.resolve(member);
                 });

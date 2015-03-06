@@ -14,22 +14,27 @@ var app = angular.module('myApp', ['rmMeetup'])
 
     var controllerId = 'MeetupController';
 
-    app.controller(controllerId, ['$scope', 'rmMeetupOauthService', meetupontroller]);
+    app.controller(controllerId, ['$scope', 'rmMeetupOauthService', 'rmMeetupMemberService', meetupontroller]);
 
-    function meetupontroller($scope, rmMeetupOauthService){
+    function meetupontroller($scope, rmMeetupOauthService, rmMeetupMemberService){
         $scope.token = '';
         $scope.expiresIn = '';
+        $scope.member;
 
         $scope.refresh = function(token, expiresIn){
             $scope.$apply(function() {
                 $scope.token = token;
                 $scope.expiresIn = expiresIn;
+                rmMeetupMemberService.getLoggedMember(token).then(function(member){
+                    $scope.member = member;
+                });
             });
         }
 
         $scope.clear = function(){
             $scope.token = '';
             $scope.expiresIn = '';
+            $scope.member = null;
         }
 
         $scope.refreshOauthAccess = function(){
@@ -37,6 +42,10 @@ var app = angular.module('myApp', ['rmMeetup'])
 
             $scope.token = oauthAccess.tokenAccess;
             $scope.expiresIn = oauthAccess.expiresIn;
+
+            rmMeetupMemberService.getLoggedMember(oauthAccess.tokenAccess).then(function(member){
+                $scope.member = member;
+            });
         }
     }
 })();

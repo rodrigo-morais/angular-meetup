@@ -180,7 +180,7 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
                         access_token: access_token
                     }
                 )
-                .$post
+                .$promise
                 .then(function(member){
                     deferred.resolve(member);
                 });
