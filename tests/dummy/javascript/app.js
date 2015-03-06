@@ -14,9 +14,9 @@ var app = angular.module('myApp', ['rmMeetup'])
 
     var controllerId = 'MeetupController';
 
-    app.controller(controllerId, ['$scope', 'rmMeetupOauthService', 'rmMeetupMemberService', meetupontroller]);
+    app.controller(controllerId, ['$scope', 'rmMeetupOauthService', 'rmMeetupMemberService', 'rmMeetupGroupService', meetupontroller]);
 
-    function meetupontroller($scope, rmMeetupOauthService, rmMeetupMemberService){
+    function meetupontroller($scope, rmMeetupOauthService, rmMeetupMemberService, rmMeetupGroupService){
         $scope.token = '';
         $scope.expiresIn = '';
         $scope.member;
@@ -46,6 +46,26 @@ var app = angular.module('myApp', ['rmMeetup'])
             rmMeetupMemberService.getLoggedMember(oauthAccess.tokenAccess).then(function(member){
                 $scope.member = member;
             });
+        }
+
+        $scope.getAllGroups = function(){
+            if($scope.token){
+                rmMeetupGroupService
+                    .getByTopic($scope.token, 'AngularJS')
+                    .then(function(groups){
+                    $scope.groups = groups.results;
+                });
+            }
+        }
+
+        $scope.getGroup = function(){
+            if($scope.token){
+                rmMeetupGroupService
+                    .get($scope.token, 15557752)
+                    .then(function(groups){
+                    $scope.groups = groups.results;
+                });
+            }
         }
     }
 })();

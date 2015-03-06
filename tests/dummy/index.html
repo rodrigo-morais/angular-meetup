@@ -19,6 +19,10 @@
             <button data-ng:click="clear()">CLEAR</button>
             <br />
             <button data-ng:click="refreshOauthAccess()">Refresh Oauth Access</button>
+            <button data-ng:click="getAllGroups()">
+                Get By AngularJS topic
+            </button>
+            <button data-ng:click="getGroup()">Get Group</button>
             <br />
             <br />
             <table data-ng:if="member != null">
@@ -63,6 +67,37 @@
                         <td>
                             <img data-ng:src="{{member.photo.photo_link}}" alt="photo" />
                         </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table data-ng:if="groups != null">
+                <thead>
+                    <tr>
+                        <th colspan="4" style="text-align: center; border:solid 1px #000000">
+                            Groups
+                        </th>
+                    </tr>
+                    <tr>
+                        <th style="text-align: left; min-width: 40px; border:solid 1px #000000">
+                            ID
+                        </th>
+                        <th style="text-align: left; min-width: 100px; border:solid 1px #000000">
+                            Name
+                        </th>
+                        <th style="text-align: left; min-width: 100px; border:solid 1px #000000">
+                            Country
+                        </th>
+                        <th style="text-align: left; min-width: 100px; border:solid 1px #000000">
+                            City
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng:repeat="group in groups">
+                        <td>{{group.id}}</td>
+                        <td>{{group.name}}</td>
+                        <td>{{group.country}}</td>
+                        <td>{{group.city}}</td>
                     </tr>
                 </tbody>
             </table>
