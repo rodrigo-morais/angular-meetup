@@ -166,7 +166,7 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
     ['$q', '$resource', rmMeetupEventsService]);
 
     function rmMeetupEventsService($q, $resource) {
-        var Group = $resource(
+        var Events = $resource(
             'https://api.meetup.com/2/events'
         );
 
@@ -178,10 +178,31 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
                     status = 'upcoming,past,proposed,suggested';
                 }
 
-                Group.get(
+                Events.get(
                     {
                         access_token: access_token,
                         group_id: group_id,
+                        status: status
+                    }
+                )
+                .$promise
+                .then(function(member){
+                    deferred.resolve(member);
+                });
+
+                return deferred.promise;
+            },
+            getByEventId: function(access_token, event_id, status){
+                var deferred = $q.defer();
+
+                if(status === null || status === undefined){
+                    status = 'upcoming,past,proposed,suggested';
+                }
+
+                Events.get(
+                    {
+                        access_token: access_token,
+                        event_id: event_id,
                         status: status
                     }
                 )

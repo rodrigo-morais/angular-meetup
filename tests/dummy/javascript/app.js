@@ -68,10 +68,20 @@ var app = angular.module('myApp', ['rmMeetup'])
             }
         }
 
-        $scope.getEvent = function(){
+        $scope.getEvents = function(){
             if($scope.token){
                 rmMeetupEventsService
                     .getByGroupId($scope.token, 15557752)
+                    .then(function(events){
+                    $scope.events = events.results;
+                });
+            }
+        }
+
+        $scope.getEvent = function(){
+            if($scope.token){
+                rmMeetupEventsService
+                    .getByEventId($scope.token, 206641902)
                     .then(function(events){
                     $scope.events = events.results;
                 });
