@@ -61,7 +61,21 @@ var app = angular.module('myApp', ['rmMeetup'])
         $scope.getGroup = function(){
             if($scope.token){
                 rmMeetupGroupService
-                    .get($scope.token, 15557752)
+                    .getById($scope.token, 15557752)
+                    .then(function(groups){
+                    $scope.groups = groups.results;
+                });
+            }
+        }
+
+        $scope.getGroupByParameters = function(){
+            if($scope.token){
+                rmMeetupGroupService
+                    .get($scope.token, 
+                        {
+                            'member_id': 68730302
+                        }
+                    )
                     .then(function(groups){
                     $scope.groups = groups.results;
                 });

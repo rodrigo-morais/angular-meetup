@@ -254,7 +254,29 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
         );
 
         return{
-            get: function(access_token, group_id){
+            get: function(access_token, parameters){
+                var deferred = $q.defer();
+
+                if(parameters){
+                    parameters.access_token = access_token;
+                }
+                else{
+                    parameters = {
+                        'access_token': access_token
+                    };
+                }
+
+                Group.get(
+                    parameters
+                )
+                .$promise
+                .then(function(groups){
+                    deferred.resolve(groups);
+                });
+
+                return deferred.promise;
+            },
+            getById: function(access_token, group_id){
                 var deferred = $q.defer();
 
                 Group.get(
@@ -280,8 +302,8 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
                     }
                 )
                 .$promise
-                .then(function(member){
-                    deferred.resolve(member);
+                .then(function(groups){
+                    deferred.resolve(groups);
                 });
 
                 return deferred.promise;
