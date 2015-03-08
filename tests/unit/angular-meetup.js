@@ -6,13 +6,13 @@ describe('Unit test to use Meetup.com API', function() {
       rmConsumer,
       rmOauthAccessService,
       oauthAccess,
-      rmMemberService;
+      rmMembersService;
 
   beforeEach(module('rmMeetup', function(rmConsumerProvider){
     rmConsumer = rmConsumerProvider;
   }));
 
-  beforeEach(inject(function(_$compile_, _$rootScope_, _$timeout_, _$window_, $injector, _OauthAccess_, _rmMeetupOauthService_, _rmMeetupMemberService_){
+  beforeEach(inject(function(_$compile_, _$rootScope_, _$timeout_, _$window_, $injector, _OauthAccess_, _rmMeetupOauthService_, _rmMeetupMembersService_){
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $timeout = _$timeout_;
@@ -24,7 +24,7 @@ describe('Unit test to use Meetup.com API', function() {
 
     rmOauthAccessService = _rmMeetupOauthService_;
 
-    rmMemberService = _rmMeetupMemberService_;
+    rmMembersService = _rmMeetupMembersService_;
   }));
 
   it('Verify if OauthAccess value has token and expiresIn property with blank value', function () {

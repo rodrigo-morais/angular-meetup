@@ -20,8 +20,8 @@
                     }
                 )
                 .$promise
-                .then(function(member){
-                    deferred.resolve(member);
+                .then(function(groups){
+                    deferred.resolve(groups);
                 });
 
                 return deferred.promise;

@@ -213,8 +213,8 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
                     }
                 )
                 .$promise
-                .then(function(member){
-                    deferred.resolve(member);
+                .then(function(groups){
+                    deferred.resolve(groups);
                 });
 
                 return deferred.promise;
@@ -241,10 +241,10 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
 (function(){
     'use strict';
 
-    rmMeetup.factory('rmMeetupMemberService',
-    ['$q', '$resource', rmMeetupMemberService]);
+    rmMeetup.factory('rmMeetupMembersService',
+    ['$q', '$resource', rmMeetupMembersService]);
 
-    function rmMeetupMemberService($q, $resource) {
+    function rmMeetupMembersService($q, $resource) {
         var Member = $resource(
             'https://api.meetup.com/2/member/self?access_token=:access_token',
             {access_token: '@_access_token'}
