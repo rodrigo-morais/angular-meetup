@@ -87,5 +87,21 @@ var app = angular.module('myApp', ['rmMeetup'])
                 });
             }
         }
+
+        $scope.getEventsByParameters = function(){
+            if($scope.token){
+                rmMeetupEventsService
+                    .get($scope.token, 
+                        {
+                            'group_id': 15557752,
+                            'event_id': 206641902,
+                            'status': 'past'
+                        }
+                    )
+                    .then(function(events){
+                    $scope.events = events.results;
+                });
+            }
+        }
     }
 })();

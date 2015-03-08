@@ -186,8 +186,8 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
                     }
                 )
                 .$promise
-                .then(function(member){
-                    deferred.resolve(member);
+                .then(function(events){
+                    deferred.resolve(events);
                 });
 
                 return deferred.promise;
@@ -207,8 +207,34 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
                     }
                 )
                 .$promise
-                .then(function(member){
-                    deferred.resolve(member);
+                .then(function(events){
+                    deferred.resolve(events);
+                });
+
+                return deferred.promise;
+            },
+            get: function(access_token, parameters){
+                var deferred = $q.defer();
+
+                if(parameters){
+                    parameters.access_token = access_token;
+                }
+                else{
+                    parameters = {
+                        'access_token': access_token
+                    };
+                }
+
+                if(status === null || status === undefined){
+                    status = 'upcoming,past,proposed,suggested';
+                }
+
+                Events.get(
+                    parameters
+                )
+                .$promise
+                .then(function(events){
+                    deferred.resolve(events);
                 });
 
                 return deferred.promise;
