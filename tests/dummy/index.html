@@ -23,6 +23,7 @@
                 Get By AngularJS topic
             </button>
             <button data-ng:click="getGroup()">Get Group</button>
+            <button data-ng:click="getEvent()">Get Event By Group</button>
             <br />
             <br />
             <table data-ng:if="member != null">
@@ -98,6 +99,29 @@
                         <td>{{group.name}}</td>
                         <td>{{group.country}}</td>
                         <td>{{group.city}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table data-ng:if="events != null">
+                <thead>
+                    <tr>
+                        <th colspan="4" style="text-align: center; border:solid 1px #000000">
+                            Events
+                        </th>
+                    </tr>
+                    <tr>
+                        <th style="text-align: left; min-width: 40px; border:solid 1px #000000">
+                            ID
+                        </th>
+                        <th style="text-align: left; min-width: 100px; border:solid 1px #000000">
+                            Name
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng:repeat="event in events">
+                        <td>{{event.id}}</td>
+                        <td>{{event.name}}</td>
                     </tr>
                 </tbody>
             </table>
