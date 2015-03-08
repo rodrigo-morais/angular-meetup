@@ -171,14 +171,18 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
         );
 
         return{
-            getByGroupId: function(access_token, group_id){
+            getByGroupId: function(access_token, group_id, status){
                 var deferred = $q.defer();
+
+                if(status === null || status === undefined){
+                    status = 'upcoming,past,proposed,suggested';
+                }
 
                 Group.get(
                     {
                         access_token: access_token,
                         group_id: group_id,
-                        status: 'upcoming,past,proposed,suggested'
+                        status: status
                     }
                 )
                 .$promise
