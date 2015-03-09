@@ -15,6 +15,15 @@ var rmMeetup = angular.module('rmMeetup', ['ngSanitize', 'ngResource'])
 angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
   'use strict';
 
+  $templateCache.put('component/templates/groupsList.html',
+    "<ul>\n" +
+    "    <li data-ng:repeat=\"group in groups\">\n" +
+    "        {{group.name}}\n" +
+    "    </li>\n" +
+    "</ul>"
+  );
+
+
   $templateCache.put('component/templates/meetupOauth.html',
     "<a  data-ng:transclude>\n" +
     "</a>"
@@ -32,6 +41,56 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
         
     }
 
+})();
+(function() {
+    'use strict';
+    
+    rmMeetup.directive('rmMeetupGroups',
+    ['rmMeetupGroupService',rmMeetupGroupsDirective]);
+
+    function rmMeetupGroupsDirective(rmMeetupGroupService) {
+
+        var html = 'component/templates/groupsList.html';
+
+        return {
+            restrict: 'E',
+            templateUrl: html,
+            replace: true,
+            transclude: true,
+            scope: {
+                accessToken: '@',
+                groupId: '@',
+                topic: '@',
+                parameters: '=',
+                type: '@',
+                fields: '=',
+                filter: '@'
+            },
+            link: function (scope, element, attrs, controller) {
+                scope.groups = [];
+
+                if(scope.accessToken){
+                    rmMeetupGroupService
+                        .getById(scope.accessToken, scope.groupId)
+                        .then(function(_groups){
+                            scope.groups = _groups.results;
+                        });
+                }
+                else{
+                    scope.$watch('accessToken', function(newValue, oldValue) {
+                        if(newValue !== oldValue){
+                            rmMeetupGroupService
+                            .getById(newValue, scope.groupId)
+                            .then(function(_groups){
+                                scope.groups = _groups.results;
+                            });
+                        }
+                    });
+                }
+            }
+        };
+
+    }
 })();
 (function() {
     'use strict';
@@ -365,15 +424,7 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
     ['$q', '$resource', rmMeetupRSVPsService]);
 
     function rmMeetupRSVPsService($q, $resource) {
-        var RSVPs = $resource(
-            'https://api.meetup.com/2/rsvps',
-            {},
-            {
-                post: {
-                    method: 'POST'
-                }
-            }
-        );
+        var RSVPs = $resource('https://api.meetup.com/2/rsvps');
 
         return{
             getByEventId: function(access_token, event_id){
@@ -391,40 +442,6 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
                 });
 
                 return deferred.promise;
-            },
-            post: function(access_token, event_id, member_id, response){
-                var deferred = $q.defer();
-/*
-                this
-                    .getByEventId(access_token, event_id)
-                    .then(function(rspvs){
-                        var rsvp = rspvs.results.filter(function(_rsvp){
-                            return _rsvp.member.member_id === member_id;
-                        });
-
-                        if(rsvp.length > 0){
-                            rsvp = rsvp[0];
-                            rsvp.response = 'yes';
-
-                            rsvp.$save();
-                        }
-                    });
-*/
-                RSVPs.post(
-                    {
-                        access_token: access_token,
-                        event_id: event_id,
-                        member_id: member_id,
-                        rsvp: response
-                    }
-                )
-                .$promise
-                .then(function(rsvps){
-                    deferred.resolve(rsvps);
-                });
-
-                return deferred.promise;
-                
             }
         };
     }
