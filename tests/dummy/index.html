@@ -27,6 +27,7 @@
             <button data-ng:click="getEvents()">Get Event By Group</button>
             <button data-ng:click="getEvent()">Get Event By Event ID</button>
             <button data-ng:click="getEventsByParameters()">Get Event By Gerenric Parameter</button>
+            <button data-ng:click="getRSVPsByEvent()">Get RSVPs</button>
             <br />
             <br />
             <table data-ng:if="member != null">
@@ -125,6 +126,41 @@
                     <tr data-ng:repeat="event in events">
                         <td>{{event.id}}</td>
                         <td>{{event.name}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table data-ng:if="rsvps != null">
+                <thead>
+                    <tr>
+                        <th colspan="4" style="text-align: center; border:solid 1px #000000">
+                            RSVPs
+                        </th>
+                    </tr>
+                    <tr>
+                        <th style="text-align: left; min-width: 40px; border:solid 1px #000000">
+                            ID
+                        </th>
+                        <th style="text-align: left; min-width: 100px; border:solid 1px #000000">
+                            Name
+                        </th>
+                        <th style="text-align: left; min-width: 100px; border:solid 1px #000000">
+                            Photo
+                        </th>
+                        <th style="text-align: left; min-width: 100px; border:solid 1px #000000">
+                            Response
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng:repeat="rsvp in rsvps">
+                        <td>{{rsvp.member.member_id}}</td>
+                        <td>{{rsvp.member.name}}</td>
+                        <td>
+                            <img data-ng:src="{{rsvp.member_photo.photo_link}}" alt="photo" />
+                        </td>
+                        <td >
+                            {{rsvp.response}}
+                        </td>
                     </tr>
                 </tbody>
             </table>
