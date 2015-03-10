@@ -24,6 +24,28 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('component/templates/groupsTable.html',
+    "<table data-ng:if=\"hasGroups\">\n" +
+    "    <thead>\n" +
+    "        <tr>\n" +
+    "            <th>ID</th>\n" +
+    "            <th>Name</th>\n" +
+    "        </tr>\n" +
+    "    </thead>\n" +
+    "    <tbody>\n" +
+    "        <tr data-ng:repeat=\"group in groups\">\n" +
+    "            <td>\n" +
+    "                {{group.id}}\n" +
+    "            </td>\n" +
+    "            <td>\n" +
+    "                {{group.name}}\n" +
+    "            </td>\n" +
+    "        </tr>\n" +
+    "    </tbody>\n" +
+    "</table>"
+  );
+
+
   $templateCache.put('component/templates/meetupOauth.html',
     "<a  data-ng:transclude>\n" +
     "</a>"
@@ -50,11 +72,16 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
 
     function rmMeetupGroupsDirective(rmMeetupGroupService) {
 
+        var _setGroups = function(scope, _groups){
+            scope.groups = _groups.results;
+            scope.hasGroups = (scope.groups !== undefined && scope.groups.length > 0);
+        };
+
         var _getGroupById = function(scope){
             rmMeetupGroupService
                 .getById(scope.accessToken, scope.groupId)
                 .then(function(_groups){
-                    scope.groups = _groups.results;
+                    _setGroups(scope, _groups);
                 });
         };
 
@@ -62,7 +89,7 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
             rmMeetupGroupService
                 .getByTopic(scope.accessToken, scope.topic)
                 .then(function(_groups){
-                    scope.groups = _groups.results;
+                    _setGroups(scope, _groups);
                 });
         };
 
@@ -70,7 +97,7 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
             rmMeetupGroupService
                 .get(scope.accessToken, scope.parameters)
                 .then(function(_groups){
-                    scope.groups = _groups.results;
+                    _setGroups(scope, _groups);
                 });
         };
 
@@ -86,12 +113,17 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
             }
         };
 
-        var html = 'component/templates/groupsList.html';
+        var html = 'component/templates/';
 
         return {
             restrict: 'E',
-            templateUrl: html,
-            replace: true,
+            templateUrl: function(element, attr){
+                if(attr.type === 'table'){
+                    return html + 'groupsTable.html';
+                }
+
+                return html + 'groupsList.html';
+            },
             transclude: true,
             scope: {
                 accessToken: '@',
@@ -104,6 +136,7 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
             },
             link: function (scope, element, attrs, controller) {
                 scope.groups = [];
+                scope.hasGroups = false;
 
                 if(scope.accessToken){
                     _getGroups(scope);

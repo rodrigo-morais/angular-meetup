@@ -6,11 +6,16 @@
 
     function rmMeetupGroupsDirective(rmMeetupGroupService) {
 
+        var _setGroups = function(scope, _groups){
+            scope.groups = _groups.results;
+            scope.hasGroups = (scope.groups !== undefined && scope.groups.length > 0);
+        };
+
         var _getGroupById = function(scope){
             rmMeetupGroupService
                 .getById(scope.accessToken, scope.groupId)
                 .then(function(_groups){
-                    scope.groups = _groups.results;
+                    _setGroups(scope, _groups);
                 });
         };
 
@@ -18,7 +23,7 @@
             rmMeetupGroupService
                 .getByTopic(scope.accessToken, scope.topic)
                 .then(function(_groups){
-                    scope.groups = _groups.results;
+                    _setGroups(scope, _groups);
                 });
         };
 
@@ -26,7 +31,7 @@
             rmMeetupGroupService
                 .get(scope.accessToken, scope.parameters)
                 .then(function(_groups){
-                    scope.groups = _groups.results;
+                    _setGroups(scope, _groups);
                 });
         };
 
@@ -42,12 +47,17 @@
             }
         };
 
-        var html = 'component/templates/groupsList.html';
+        var html = 'component/templates/';
 
         return {
             restrict: 'E',
-            templateUrl: html,
-            replace: true,
+            templateUrl: function(element, attr){
+                if(attr.type === 'table'){
+                    return html + 'groupsTable.html';
+                }
+
+                return html + 'groupsList.html';
+            },
             transclude: true,
             scope: {
                 accessToken: '@',
@@ -60,6 +70,7 @@
             },
             link: function (scope, element, attrs, controller) {
                 scope.groups = [];
+                scope.hasGroups = false;
 
                 if(scope.accessToken){
                     _getGroups(scope);

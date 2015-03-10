@@ -182,6 +182,13 @@
                 parameters = memberParameter
             >
             </rm-meetup-groups>
+            <h1 data-ng:if="token != ''">Table of Groups By Parameters</h1>
+            <rm-meetup-groups
+                access-token={{token}}
+                parameters=memberParameter
+                type='table'
+            >
+            </rm-meetup-groups>
         </div>
         <script src="vendor/angular/angular.js"></script>
         <script src="vendor/angular-sanitize/angular-sanitize.js"></script>

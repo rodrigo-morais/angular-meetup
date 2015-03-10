@@ -1,0 +1,18 @@
+<table data-ng:if="hasGroups">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr data-ng:repeat="group in groups">
+            <td>
+                {{group.id}}
+            </td>
+            <td>
+                {{group.name}}
+            </td>
+        </tr>
+    </tbody>
+</table>
