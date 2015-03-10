@@ -20,6 +20,7 @@ var app = angular.module('myApp', ['rmMeetup'])
         $scope.token = '';
         $scope.expiresIn = '';
         $scope.member;
+        $scope.memberParameter = {'member_id': 68730302};
 
         $scope.refresh = function(token, expiresIn){
             $scope.$apply(function() {

@@ -66,12 +66,23 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
                 });
         };
 
+        var _getGroupByParameters = function(scope){
+            rmMeetupGroupService
+                .get(scope.accessToken, scope.parameters)
+                .then(function(_groups){
+                    scope.groups = _groups.results;
+                });
+        };
+
         var _getGroups = function(scope){
             if(scope.groupId){
                 _getGroupById(scope);
             }
             else if(scope.topic){
                 _getGroupByTopic(scope);
+            }
+            else if(scope.parameters){
+                _getGroupByParameters(scope);
             }
         };
 
