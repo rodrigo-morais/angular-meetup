@@ -6,6 +6,14 @@
 
     function rmMeetupGroupsDirective(rmMeetupGroupService) {
 
+        var _getGroups = function(scope){
+            rmMeetupGroupService
+                .getById(scope.accessToken, scope.groupId)
+                .then(function(_groups){
+                    scope.groups = _groups.results;
+                });
+        };
+
         var html = 'component/templates/groupsList.html';
 
         return {
@@ -26,20 +34,12 @@
                 scope.groups = [];
 
                 if(scope.accessToken){
-                    rmMeetupGroupService
-                        .getById(scope.accessToken, scope.groupId)
-                        .then(function(_groups){
-                            scope.groups = _groups.results;
-                        });
+                    _getGroups(scope);
                 }
                 else{
                     scope.$watch('accessToken', function(newValue, oldValue) {
                         if(newValue !== oldValue){
-                            rmMeetupGroupService
-                            .getById(newValue, scope.groupId)
-                            .then(function(_groups){
-                                scope.groups = _groups.results;
-                            });
+                            _getGroups(scope);
                         }
                     });
                 }
