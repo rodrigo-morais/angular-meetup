@@ -6,12 +6,29 @@
 
     function rmMeetupGroupsDirective(rmMeetupGroupService) {
 
-        var _getGroups = function(scope){
+        var _getGroupById = function(scope){
             rmMeetupGroupService
                 .getById(scope.accessToken, scope.groupId)
                 .then(function(_groups){
                     scope.groups = _groups.results;
                 });
+        };
+
+        var _getGroupByTopic = function(scope){
+            rmMeetupGroupService
+                .getByTopic(scope.accessToken, scope.topic)
+                .then(function(_groups){
+                    scope.groups = _groups.results;
+                });
+        };
+
+        var _getGroups = function(scope){
+            if(scope.groupId){
+                _getGroupById(scope);
+            }
+            else if(scope.topic){
+                _getGroupByTopic(scope);
+            }
         };
 
         var html = 'component/templates/groupsList.html';
