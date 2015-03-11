@@ -82,6 +82,19 @@
                         }
                     });
                 }
+
+                if(scope.fields === undefined && !Array.isArray(scope.fields)){
+                    scope.fields = [
+                        {
+                            'label': 'ID of Group',
+                            'field': 'id'
+                        },
+                        {
+                            'label': 'Name of Group',
+                            'field': 'name'
+                        }
+                    ];
+                }
             }
         };
 

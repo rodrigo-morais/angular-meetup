@@ -28,17 +28,15 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
     "<table data-ng:if=\"hasGroups\">\n" +
     "    <thead>\n" +
     "        <tr>\n" +
-    "            <th>ID</th>\n" +
-    "            <th>Name</th>\n" +
+    "            <th data-ng:repeat=\"field in fields\" class=\"{{field.field}}Label\">\n" +
+    "                {{field.label}}\n" +
+    "            </th>\n" +
     "        </tr>\n" +
     "    </thead>\n" +
     "    <tbody>\n" +
     "        <tr data-ng:repeat=\"group in groups\">\n" +
-    "            <td>\n" +
-    "                {{group.id}}\n" +
-    "            </td>\n" +
-    "            <td>\n" +
-    "                {{group.name}}\n" +
+    "            <td data-ng:model=\"group.name\" data-ng:repeat=\"field in fields\" class=\"{{field.field}}Value\">\n" +
+    "                {{group[field.field]}}\n" +
     "            </td>\n" +
     "        </tr>\n" +
     "    </tbody>\n" +
@@ -147,6 +145,19 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
                             _getGroups(scope);
                         }
                     });
+                }
+
+                if(scope.fields === undefined && !Array.isArray(scope.fields)){
+                    scope.fields = [
+                        {
+                            'label': 'ID of Group',
+                            'field': 'id'
+                        },
+                        {
+                            'label': 'Name of Group',
+                            'field': 'name'
+                        }
+                    ];
                 }
             }
         };

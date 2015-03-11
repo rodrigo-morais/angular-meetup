@@ -1,17 +1,15 @@
 <table data-ng:if="hasGroups">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Name</th>
+            <th data-ng:repeat="field in fields" class="{{field.field}}Label">
+                {{field.label}}
+            </th>
         </tr>
     </thead>
     <tbody>
         <tr data-ng:repeat="group in groups">
-            <td>
-                {{group.id}}
-            </td>
-            <td>
-                {{group.name}}
+            <td data-ng:model="group.name" data-ng:repeat="field in fields" class="{{field.field}}Value">
+                {{group[field.field]}}
             </td>
         </tr>
     </tbody>
