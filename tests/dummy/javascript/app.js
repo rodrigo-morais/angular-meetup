@@ -21,6 +21,28 @@ var app = angular.module('myApp', ['rmMeetup'])
         $scope.expiresIn = '';
         $scope.member;
         $scope.memberParameter = {'member_id': 68730302};
+        $scope.groupFields = [
+            {
+                'label': 'ID of Group',
+                'field': 'id'
+            },
+            {
+                'label': 'Name of Group',
+                'field': 'name'
+            },
+            {
+                'label': 'Country',
+                'field': 'country'
+            },
+            {
+                'label': 'City',
+                'field': 'city'
+            },
+            {
+                'label': 'State',
+                'field': 'state'
+            }
+        ];
 
         $scope.refresh = function(token, expiresIn){
             $scope.$apply(function() {
