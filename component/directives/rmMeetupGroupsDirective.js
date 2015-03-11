@@ -65,8 +65,7 @@
                 topic: '@',
                 parameters: '=',
                 type: '@',
-                fields: '=',
-                filter: '@'
+                fields: '='
             },
             link: function (scope, element, attrs, controller) {
                 scope.groups = [];

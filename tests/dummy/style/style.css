@@ -1,0 +1,27 @@
+.groupHeaderLine
+{
+    background-color: #DCDCDC;
+}
+
+.groupHeaderLine th,
+.groupBodyLine td
+{
+    border: solid 1px #000000;
+}
+
+.idLabel
+{
+    color: #FF0000;
+}
+
+.groupBodyLine:nth-child(odd)
+{
+    background-color: #8B8682;
+    color: #FFFFFF;
+}
+
+.idValue
+{
+    font-style: italic;
+    font-size: 0.8em;
+}

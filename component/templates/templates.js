@@ -13,14 +13,14 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
   $templateCache.put('component/templates/groupsTable.html',
     "<table data-ng:if=\"hasGroups\">\n" +
     "    <thead>\n" +
-    "        <tr>\n" +
+    "        <tr class=\"groupHeaderLine\">\n" +
     "            <th data-ng:repeat=\"field in fields\" class=\"{{field.field}}Label\">\n" +
     "                {{field.label}}\n" +
     "            </th>\n" +
     "        </tr>\n" +
     "    </thead>\n" +
     "    <tbody>\n" +
-    "        <tr data-ng:repeat=\"group in groups\">\n" +
+    "        <tr data-ng:repeat=\"group in groups\" class=\"groupBodyLine\">\n" +
     "            <td data-ng:model=\"group.name\" data-ng:repeat=\"field in fields\" class=\"{{field.field}}Value\">\n" +
     "                {{group[field.field]}}\n" +
     "            </td>\n" +
