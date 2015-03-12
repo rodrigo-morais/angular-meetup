@@ -165,6 +165,9 @@
                     </tr>
                 </tbody>
             </table>
+            <hr data-ng:if="token != ''">
+            <h1 data-ng:if="token != ''">Groups</h1>
+            <hr data-ng:if="token != ''">
             <h1 data-ng:if="token != ''">List of Groups By Group Id</h1>
             <rm-meetup-groups
                 access-token={{token}}
@@ -198,6 +201,42 @@
                 fields=groupFields
             >
             </rm-meetup-groups>
+            <hr data-ng:if="token != ''">
+            <h1 data-ng:if="token != ''">Events</h1>
+            <hr data-ng:if="token != ''">
+            <h1 data-ng:if="token != ''">List of Events By Group Id</h1>
+            <rm-meetup-events
+                access-token={{token}}
+                group-id = '15557752'
+            >
+            </rm-meetup-events>
+            <h1 data-ng:if="token != ''">List of Events By Event Id</h1>
+            <rm-meetup-events
+                access-token={{token}}
+                event-id = '220273617'
+            >
+            </rm-meetup-events>
+            <h1 data-ng:if="token != ''">List of Events By Parameters</h1>
+            <rm-meetup-events
+                access-token={{token}}
+                parameters = memberParameter
+            >
+            </rm-meetup-events>
+            <h1 data-ng:if="token != ''">Table of Events By Parameters</h1>
+            <rm-meetup-events
+                access-token={{token}}
+                parameters=memberParameter
+                type='table'
+            >
+            </rm-meetup-events>
+            <h1 data-ng:if="token != ''">Table of Events By Parameters With Configurable Fields</h1>
+            <rm-meetup-events
+                access-token={{token}}
+                parameters=memberParameter
+                type='table'
+                fields=eventFields
+            >
+            </rm-meetup-events>
         </div>
         <script src="vendor/angular/angular.js"></script>
         <script src="vendor/angular-sanitize/angular-sanitize.js"></script>

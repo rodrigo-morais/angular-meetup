@@ -43,6 +43,28 @@ var app = angular.module('myApp', ['rmMeetup'])
                 'field': 'state'
             }
         ];
+        $scope.eventFields = [
+            {
+                'label': 'ID of Event',
+                'field': 'id'
+            },
+            {
+                'label': 'Name of Event',
+                'field': 'name'
+            },
+            {
+                'label': 'Status',
+                'field': 'status'
+            },
+            {
+                'label': 'Group',
+                'field': 'group.name'
+            },
+            {
+                'label': 'Host',
+                'field': 'event_hosts.member_name'
+            }
+        ];
 
         $scope.refresh = function(token, expiresIn){
             $scope.$apply(function() {

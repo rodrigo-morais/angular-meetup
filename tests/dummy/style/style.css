@@ -1,10 +1,13 @@
-.groupHeaderLine
+.groupHeaderLine,
+.eventHeaderLine
 {
     background-color: #DCDCDC;
 }
 
 .groupHeaderLine th,
-.groupBodyLine td
+.groupBodyLine td,
+.eventHeaderLine th,
+.eventBodyLine td
 {
     border: solid 1px #000000;
 }
@@ -14,7 +17,8 @@
     color: #FF0000;
 }
 
-.groupBodyLine:nth-child(odd)
+.groupBodyLine:nth-child(odd),
+.eventBodyLine:nth-child(odd)
 {
     background-color: #8B8682;
     color: #FFFFFF;
