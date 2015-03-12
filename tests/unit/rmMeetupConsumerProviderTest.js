@@ -1,4 +1,4 @@
-describe('Unit test to use Meetup.com API', function() {
+describe('Unit test in consumer provider to use Meetup.com API', function() {
   var $compile,
       $rootScope,
       $timeout,

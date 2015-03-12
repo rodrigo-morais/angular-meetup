@@ -1,4 +1,4 @@
-describe('Unit test to use Meetup.com API', function() {
+describe('Unit test in Oauth directive to use Meetup.com API', function() {
   var $compile,
       $rootScope,
       $window,
