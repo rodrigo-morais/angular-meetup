@@ -15,6 +15,35 @@ var rmMeetup = angular.module('rmMeetup', ['ngSanitize', 'ngResource'])
 angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
   'use strict';
 
+  $templateCache.put('component/templates/eventsList.html',
+    "<ul>\n" +
+    "    <li data-ng:repeat=\"event in events\">\n" +
+    "        {{event.name}}\n" +
+    "    </li>\n" +
+    "</ul>"
+  );
+
+
+  $templateCache.put('component/templates/eventsTable.html',
+    "<table data-ng:if=\"hasEvents\">\n" +
+    "    <thead>\n" +
+    "        <tr class=\"eventHeaderLine\">\n" +
+    "            <th data-ng:repeat=\"field in fields\" class=\"{{field.field}}Label\">\n" +
+    "                {{field.label}}\n" +
+    "            </th>\n" +
+    "        </tr>\n" +
+    "    </thead>\n" +
+    "    <tbody>\n" +
+    "        <tr data-ng:repeat=\"event in events\" class=\"eventBodyLine\">\n" +
+    "            <td data-ng:model=\"event.name\" data-ng:repeat=\"field in fields\" class=\"{{field.field}}Value\">\n" +
+    "                {{event[field.field]}}\n" +
+    "            </td>\n" +
+    "        </tr>\n" +
+    "    </tbody>\n" +
+    "</table>"
+  );
+
+
   $templateCache.put('component/templates/groupsList.html',
     "<ul>\n" +
     "    <li data-ng:repeat=\"group in groups\">\n" +
@@ -61,6 +90,109 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
         
     }
 
+})();
+(function() {
+    'use strict';
+    
+    rmMeetup.directive('rmMeetupEvents',
+    ['rmMeetupEventsService',rmMeetupEventsDirective]);
+
+    function rmMeetupEventsDirective(rmMeetupEventsService) {
+
+        var _setEvents = function(scope, _events){
+            scope.events = _events.results;
+            scope.hasEvents = (scope.events !== undefined && scope.events.length > 0);
+        };
+
+        var _getEventByGroupId = function(scope){
+            rmMeetupEventsService
+                .getByGroupId(scope.accessToken, scope.groupId)
+                .then(function(_events){
+                    _setEvents(scope, _events);
+                });
+        };
+
+        var _getEventById = function(scope){
+            rmMeetupEventsService
+                .getByEventId(scope.accessToken, scope.eventId)
+                .then(function(_events){
+                    _setEvents(scope, _events);
+                });
+        };
+
+        var _getEventByParameters = function(scope){
+            rmMeetupEventsService
+                .get(scope.accessToken, scope.parameters)
+                .then(function(_events){
+                    _setEvents(scope, _events);
+                });
+        };
+
+        var _getEvents = function(scope){
+            if(scope.groupId){
+                _getEventByGroupId(scope);
+            }
+            else if(scope.eventId){
+                _getEventById(scope);
+            }
+            else if(scope.parameters){
+                _getEventByParameters(scope);
+            }
+        };
+
+        var html = 'component/templates/';
+
+        return {
+            restrict: 'E',
+            templateUrl: function(element, attr){
+                if(attr.type === 'table'){
+                    return html + 'eventsTable.html';
+                }
+
+                return html + 'eventsList.html';
+            },
+            transclude: true,
+            scope: {
+                accessToken: '@',
+                groupId: '@',
+                eventId: '@',
+                parameters: '=',
+                type: '@',
+                fields: '='
+            },
+            link: function (scope, element, attrs, controller) {
+                scope.events = [];
+                scope.hasEvents = false;
+
+                if(scope.accessToken){
+                    _getEvents(scope);
+                }
+                else{
+                    scope.$watch('accessToken', function(newValue, oldValue) {
+                        if(newValue !== oldValue){
+                            _getEvents(scope);
+                        }
+                    });
+                }
+
+                if(attrs.type === 'table'){
+                    if(scope.fields === undefined || !Array.isArray(scope.fields)){
+                        scope.fields = [
+                            {
+                                'label': 'ID of Event',
+                                'field': 'id'
+                            },
+                            {
+                                'label': 'Name of Event',
+                                'field': 'name'
+                            }
+                        ];
+                    }
+                }
+            }
+        };
+
+    }
 })();
 (function() {
     'use strict';

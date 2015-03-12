@@ -1,0 +1,16 @@
+<table data-ng:if="hasEvents">
+    <thead>
+        <tr class="eventHeaderLine">
+            <th data-ng:repeat="field in fields" class="{{field.field}}Label">
+                {{field.label}}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr data-ng:repeat="event in events" class="eventBodyLine">
+            <td data-ng:model="event.name" data-ng:repeat="field in fields" class="{{field.field}}Value">
+                {{event[field.field]}}
+            </td>
+        </tr>
+    </tbody>
+</table>
