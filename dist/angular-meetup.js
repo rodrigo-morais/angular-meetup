@@ -35,8 +35,8 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
     "    </thead>\n" +
     "    <tbody>\n" +
     "        <tr data-ng:repeat=\"event in events\" class=\"eventBodyLine\">\n" +
-    "            <td data-ng:model=\"event.name\" data-ng:repeat=\"field in fields\" class=\"{{field.field}}Value\">\n" +
-    "                {{event[field.field]}}\n" +
+    "            <td data-ng:repeat=\"field in fields\" class=\"{{field.field}}Value\">\n" +
+    "                {{getData(event, field.field)}}\n" +
     "            </td>\n" +
     "        </tr>\n" +
     "    </tbody>\n" +
@@ -189,6 +189,21 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
                         ];
                     }
                 }
+
+                scope.getData = function(event, field){
+                    var fields = field.split('.'),
+                        data = event,
+                        actual = fields[0],
+                        counter = 0;
+
+                    while(actual && data){
+                        data = data[actual];
+                        counter = counter + 1;
+                        actual = fields[counter];
+                    }
+
+                    return data;
+                };
             }
         };
 

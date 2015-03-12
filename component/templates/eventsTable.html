@@ -8,8 +8,8 @@
     </thead>
     <tbody>
         <tr data-ng:repeat="event in events" class="eventBodyLine">
-            <td data-ng:model="event.name" data-ng:repeat="field in fields" class="{{field.field}}Value">
-                {{event[field.field]}}
+            <td data-ng:repeat="field in fields" class="{{field.field}}Value">
+                {{getData(event, field.field)}}
             </td>
         </tr>
     </tbody>
