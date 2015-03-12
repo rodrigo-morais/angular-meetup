@@ -83,7 +83,7 @@
                 }
 
                 if(attrs.type === 'table'){
-                    if(scope.fields === undefined && !Array.isArray(scope.fields)){
+                    if(scope.fields === undefined || !Array.isArray(scope.fields)){
                         scope.fields = [
                             {
                                 'label': 'ID of Group',
