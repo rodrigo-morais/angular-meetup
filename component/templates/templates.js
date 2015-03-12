@@ -1,6 +1,35 @@
 angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
   'use strict';
 
+  $templateCache.put('component/templates/eventsList.html',
+    "<ul>\n" +
+    "    <li data-ng:repeat=\"event in events\">\n" +
+    "        {{event.name}}\n" +
+    "    </li>\n" +
+    "</ul>"
+  );
+
+
+  $templateCache.put('component/templates/eventsTable.html',
+    "<table data-ng:if=\"hasEvents\">\n" +
+    "    <thead>\n" +
+    "        <tr class=\"eventHeaderLine\">\n" +
+    "            <th data-ng:repeat=\"field in fields\" class=\"{{field.field}}Label\">\n" +
+    "                {{field.label}}\n" +
+    "            </th>\n" +
+    "        </tr>\n" +
+    "    </thead>\n" +
+    "    <tbody>\n" +
+    "        <tr data-ng:repeat=\"event in events\" class=\"eventBodyLine\">\n" +
+    "            <td data-ng:model=\"event.name\" data-ng:repeat=\"field in fields\" class=\"{{field.field}}Value\">\n" +
+    "                {{event[field.field]}}\n" +
+    "            </td>\n" +
+    "        </tr>\n" +
+    "    </tbody>\n" +
+    "</table>"
+  );
+
+
   $templateCache.put('component/templates/groupsList.html',
     "<ul>\n" +
     "    <li data-ng:repeat=\"group in groups\">\n" +
