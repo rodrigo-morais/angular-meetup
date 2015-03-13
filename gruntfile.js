@@ -100,4 +100,13 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-angular-templates');
     grunt.registerTask('default', 'watch');
     grunt.registerTask('all', ['concat']);
+    grunt.registerTask('ci', [  'jshint',
+                                'ngtemplates',
+                                'concat',
+                                'karma:unit:run',
+                                'uglify',
+                                'copy:main',
+                                'copy:css',
+                                'copy:dummy'
+                            ]);
 };
