@@ -17,7 +17,7 @@ module.exports = function(config) {
         // - PhantomJS
         // - IE (only Windows)
         //browsers: ['PhantomJS'],
-        browsers: ['Chrome', 'ChromeCanary']
+        browsers: ['Chrome', 'ChromeCanary'],
         customLaunchers: {
           Chrome_travis_ci: {
             base: 'Chrome',
