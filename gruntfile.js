@@ -103,7 +103,6 @@ module.exports = function (grunt) {
     grunt.registerTask('ci', [  'jshint',
                                 'ngtemplates',
                                 'concat',
-                                'karma:unit:run',
                                 'uglify',
                                 'copy:main',
                                 'copy:css',
