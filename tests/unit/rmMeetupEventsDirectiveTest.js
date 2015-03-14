@@ -20,7 +20,7 @@ describe('Unit test in events directive to use Meetup.com API', function() {
     var element,
         serviceFunction,
         deferred = $q.defer(),
-        meetupReturn = '<ulhh>';
+        meetupReturn = '<ul>';
 
     
     deferred.resolve({results: [{id: 3, name: "AngularJS"}]});
