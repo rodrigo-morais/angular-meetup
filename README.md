@@ -51,3 +51,19 @@ var app = angular.module('myApp', ['rmMeetup'])
         ]
     );
 ```
+
+## Oauth service
+It's a service to get data from Oauth after be authorized in Meetup.com API. This service will return token of access and expiration time.
+
+```sh
+app.controller("MeetupController", ['$scope', 'rmMeetupOauthService', meetupontroller]);
+
+function meetupontroller($scope, rmMeetupOauthService){
+    $scope.refreshOauthAccess = function(){
+        var oauthAccess = rmMeetupOauthService.getOauthAccess();
+
+        $scope.token = oauthAccess.tokenAccess;
+        $scope.expiresIn = oauthAccess.expiresIn;
+    }
+};
+```
