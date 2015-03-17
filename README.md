@@ -68,7 +68,7 @@ function meetupontroller($scope, rmMeetupOauthService){
 };
 ```
 
-## Member service
+## Members service
 It's a service to get data from member logged on Meetup.com API. This service should receive the access token returned by Oauth directive or service and will return data from member logged. The details about data returned is avaliable in address http://www.meetup.com/meetup_api/docs/2/members/.
 
 ```sh
@@ -78,6 +78,55 @@ function meetupontroller($scope, rmMeetupMembersService){
     $scope.getMember = function(token){
         rmMeetupMembersService.getLoggedMember(token).then(function(member){
             $scope.member = member;
+        });
+    }
+};
+```
+
+## Groups service
+It's a service to get data from groups that exist in Meetup.com. This service has three options to find data that will be descripted bellow. The details about data returned is avaliable in address http://www.meetup.com/meetup_api/docs/2/groups/.
+
+- Filter the group by ID - inform the access token and the group id. This service will return data from group which the ID was informed.
+
+```sh
+app.controller("MeetupController", ['$scope', 'rmMeetupMembersService', meetupontroller]);
+
+function meetupontroller($scope, rmMeetupGroupService){
+    $scope.getGroup = function(token, id){
+        rmMeetupGroupService.getById(token, id).then(function(group){
+            $scope.group = group;
+        });
+    }
+};
+```
+
+- Filter the group by topic - inform the access token and the topic. This service will return a list of groups that has this topic listed in its topics list.
+
+```sh
+app.controller("MeetupController", ['$scope', 'rmMeetupMembersService', meetupontroller]);
+
+function meetupontroller($scope, rmMeetupGroupService){
+    $scope.getGroups = function(token){
+        rmMeetupGroupService.getByTopic(token, 'AngularJS').then(function(groups){
+            $scope.groups = groups;
+        });
+    }
+};
+```
+
+- Filter the group by parameters - inform the access token and all parameters that is possible filter a group on Meetup.com API. This service is more flexible, because the users can create the filter according to their necessities and it will return a list of groups. The parameters is a JSON object that will accept all parameters informed in Meetup.com API page in address http://www.meetup.com/meetup_api/docs/2/groups/.
+
+```sh
+app.controller("MeetupController", ['$scope', 'rmMeetupMembersService', meetupontroller]);
+
+function meetupontroller($scope, rmMeetupGroupService){
+    $scope.getGroups = function(token){
+        var parameters = {
+            'member_id': 65760712,
+            'topic': 'AngularJS'
+        };
+        rmMeetupGroupService.get(token, parameters).then(function(groups){
+            $scope.groups = groups;
         });
     }
 };
