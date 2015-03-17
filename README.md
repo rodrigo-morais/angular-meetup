@@ -67,3 +67,18 @@ function meetupontroller($scope, rmMeetupOauthService){
     }
 };
 ```
+
+## Member service
+It's a service to get data from member logged on Meetup.com API. This service should receive the access token returned by Oauth directive or service and will return data from member logged. The details about data returned is avaliable in address http://www.meetup.com/meetup_api/docs/2/members/.
+
+```sh
+app.controller("MeetupController", ['$scope', 'rmMeetupMembersService', meetupontroller]);
+
+function meetupontroller($scope, rmMeetupMembersService){
+    $scope.getMember = function(token){
+        rmMeetupMembersService.getLoggedMember(token).then(function(member){
+            $scope.member = member;
+        });
+    }
+};
+```
