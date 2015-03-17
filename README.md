@@ -186,3 +186,20 @@ function meetupontroller($scope, rmMeetupEventsService){
     }
 };
 ```
+
+## RSVPs service
+It's a service to get data from RSVPs that exist in Meetup.com from exactly event. The details about data returned is avaliable in address http://www.meetup.com/meetup_api/docs/2/rsvps/.
+
+- Filter the RSVPs by event ID - inform the access token and the event ID. This service will return data from RSVPs to according to the event ID was informed.
+
+```sh
+app.controller("MeetupController", ['$scope', 'rmMeetupRSVPsService', meetupontroller]);
+
+function meetupontroller($scope, rmMeetupRSVPsService){
+    $scope.getRSVPs = function(token, eventId){
+        rmMeetupRSVPsService.getByEventId(token, eventId).then(function(rsvps){
+            $scope.rsvps = rsvps;
+        });
+    }
+};
+```
