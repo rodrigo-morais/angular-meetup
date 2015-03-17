@@ -56,9 +56,9 @@ var app = angular.module('myApp', ['rmMeetup'])
 It's a service to get data from Oauth after be authorized in Meetup.com API. This service will return token of access and expiration time.
 
 ```sh
-app.controller("MeetupController", ['$scope', 'rmMeetupOauthService', meetupontroller]);
+app.controller("MeetupController", ['$scope', 'rmMeetupOauthService', meetupController]);
 
-function meetupontroller($scope, rmMeetupOauthService){
+function meetupController($scope, rmMeetupOauthService){
     $scope.refreshOauthAccess = function(){
         var oauthAccess = rmMeetupOauthService.getOauthAccess();
 
@@ -72,9 +72,9 @@ function meetupontroller($scope, rmMeetupOauthService){
 It's a service to get data from member logged on Meetup.com API. This service should receive the access token returned by Oauth directive or service and will return data from member logged. The details about data returned is avaliable in address http://www.meetup.com/meetup_api/docs/2/members/.
 
 ```sh
-app.controller("MeetupController", ['$scope', 'rmMeetupMembersService', meetupontroller]);
+app.controller("MeetupController", ['$scope', 'rmMeetupMembersService', meetupController]);
 
-function meetupontroller($scope, rmMeetupMembersService){
+function meetupController($scope, rmMeetupMembersService){
     $scope.getMember = function(token){
         rmMeetupMembersService.getLoggedMember(token).then(function(member){
             $scope.member = member;
@@ -89,9 +89,9 @@ It's a service to get data from groups that exist in Meetup.com. This service ha
 - Filter the group by ID - inform the access token and the group id. This service will return data from group which the ID was informed.
 
 ```sh
-app.controller("MeetupController", ['$scope', 'rmMeetupMembersService', meetupontroller]);
+app.controller("MeetupController", ['$scope', 'rmMeetupMembersService', meetupController]);
 
-function meetupontroller($scope, rmMeetupGroupService){
+function meetupController($scope, rmMeetupGroupService){
     $scope.getGroup = function(token, id){
         rmMeetupGroupService.getById(token, id).then(function(group){
             $scope.group = group;
@@ -103,9 +103,9 @@ function meetupontroller($scope, rmMeetupGroupService){
 - Filter the group by topic - inform the access token and the topic. This service will return a list of groups that has this topic listed in its topics list.
 
 ```sh
-app.controller("MeetupController", ['$scope', 'rmMeetupMembersService', meetupontroller]);
+app.controller("MeetupController", ['$scope', 'rmMeetupMembersService', meetupController]);
 
-function meetupontroller($scope, rmMeetupGroupService){
+function meetupController($scope, rmMeetupGroupService){
     $scope.getGroups = function(token){
         rmMeetupGroupService.getByTopic(token, 'AngularJS').then(function(groups){
             $scope.groups = groups;
@@ -117,9 +117,9 @@ function meetupontroller($scope, rmMeetupGroupService){
 - Filter the group by parameters - inform the access token and all parameters that is possible filter a group on Meetup.com API. This service is more flexible, because the users can create the filter according to their necessities and it will return a list of groups. The parameters is a JSON object that will accept all parameters informed in Meetup.com API page in address http://www.meetup.com/meetup_api/docs/2/groups/.
 
 ```sh
-app.controller("MeetupController", ['$scope', 'rmMeetupMembersService', meetupontroller]);
+app.controller("MeetupController", ['$scope', 'rmMeetupMembersService', meetupController]);
 
-function meetupontroller($scope, rmMeetupGroupService){
+function meetupController($scope, rmMeetupGroupService){
     $scope.getGroups = function(token){
         var parameters = {
             'member_id': 65760712,
@@ -138,9 +138,9 @@ It's a service to get data from events that exist in Meetup.com. This service ha
 - Filter the event by ID - inform the access token and the event id. This service will return data from event which the ID was informed.
 
 ```sh
-app.controller("MeetupController", ['$scope', 'rmMeetupEventsService', meetupontroller]);
+app.controller("MeetupController", ['$scope', 'rmMeetupEventsService', meetupController]);
 
-function meetupontroller($scope, rmMeetupEventsService){
+function meetupController($scope, rmMeetupEventsService){
     $scope.getEvent = function(token, id){
         rmMeetupEventsService.getByEventId(token, id).then(function(event){
             $scope.event = event;
@@ -157,9 +157,9 @@ function meetupontroller($scope, rmMeetupEventsService){
 The status should be informed in a string where each one should be separate with comma. If none status is informed then the service will filter for all.
 
 ```sh
-app.controller("MeetupController", ['$scope', 'rmMeetupEventsService', meetupontroller]);
+app.controller("MeetupController", ['$scope', 'rmMeetupEventsService', meetupController]);
 
-function meetupontroller($scope, rmMeetupEventsService){
+function meetupController($scope, rmMeetupEventsService){
     $scope.getEvents = function(token, groupId){
         var status = 'upcoming';
         rmMeetupEventsService.getByGroupId(token, groupId).then(function(events){
@@ -172,9 +172,9 @@ function meetupontroller($scope, rmMeetupEventsService){
 - Filter the event by parameters - inform the access token and all parameters that is possible filter a event on Meetup.com API. This service is more flexible, because the users can create the filter according to their necessities and it will return a list of events. The parameters is a JSON object that will accept all parameters informed in Meetup.com API page in address http://www.meetup.com/meetup_api/docs/2/events/.
 
 ```sh
-app.controller("MeetupController", ['$scope', 'rmMeetupEventsService', meetupontroller]);
+app.controller("MeetupController", ['$scope', 'rmMeetupEventsService', meetupController]);
 
-function meetupontroller($scope, rmMeetupEventsService){
+function meetupController($scope, rmMeetupEventsService){
     $scope.getEvents = function(token){
         var parameters = {
             'member_id': 63450718,
@@ -193,9 +193,9 @@ It's a service to get data from RSVPs that exist in Meetup.com from exactly even
 - Filter the RSVPs by event ID - inform the access token and the event ID. This service will return data from RSVPs to according to the event ID was informed.
 
 ```sh
-app.controller("MeetupController", ['$scope', 'rmMeetupRSVPsService', meetupontroller]);
+app.controller("MeetupController", ['$scope', 'rmMeetupRSVPsService', meetupController]);
 
-function meetupontroller($scope, rmMeetupRSVPsService){
+function meetupController($scope, rmMeetupRSVPsService){
     $scope.getRSVPs = function(token, eventId){
         rmMeetupRSVPsService.getByEventId(token, eventId).then(function(rsvps){
             $scope.rsvps = rsvps;
