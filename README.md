@@ -131,3 +131,58 @@ function meetupontroller($scope, rmMeetupGroupService){
     }
 };
 ```
+
+## Events service
+It's a service to get data from events that exist in Meetup.com. This service has three options to find data that will be descripted bellow. The details about data returned is avaliable in address http://www.meetup.com/meetup_api/docs/2/events/.
+
+- Filter the event by ID - inform the access token and the event id. This service will return data from event which the ID was informed.
+
+```sh
+app.controller("MeetupController", ['$scope', 'rmMeetupEventsService', meetupontroller]);
+
+function meetupontroller($scope, rmMeetupEventsService){
+    $scope.getEvent = function(token, id){
+        rmMeetupEventsService.getByEventId(token, id).then(function(event){
+            $scope.event = event;
+        });
+    }
+};
+```
+
+- Filter the event by group id - inform the access token and the group id. This service will return a list of events that exist in group informed. Is possible inform the status of event that should be filtered. There are four options of status that could be informed:
+  - upcoming
+  - past
+  - proposed
+  - suggested
+The status should be informed in a string where each one should be separate with comma. If none status is informed then the service will filter for all.
+
+```sh
+app.controller("MeetupController", ['$scope', 'rmMeetupEventsService', meetupontroller]);
+
+function meetupontroller($scope, rmMeetupEventsService){
+    $scope.getEvents = function(token, groupId){
+        var status = 'upcoming';
+        rmMeetupEventsService.getByGroupId(token, groupId).then(function(events){
+            $scope.events = events;
+        });
+    }
+};
+```
+
+- Filter the event by parameters - inform the access token and all parameters that is possible filter a event on Meetup.com API. This service is more flexible, because the users can create the filter according to their necessities and it will return a list of events. The parameters is a JSON object that will accept all parameters informed in Meetup.com API page in address http://www.meetup.com/meetup_api/docs/2/events/.
+
+```sh
+app.controller("MeetupController", ['$scope', 'rmMeetupEventsService', meetupontroller]);
+
+function meetupontroller($scope, rmMeetupEventsService){
+    $scope.getEvents = function(token){
+        var parameters = {
+            'member_id': 63450718,
+            'status': 'upcoming'
+        };
+        rmMeetupEventsService.get(token, parameters).then(function(events){
+            $scope.events = events;
+        });
+    }
+};
+```
