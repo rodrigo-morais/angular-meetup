@@ -64,10 +64,6 @@
                     };
                 }
 
-                if(status === null || status === undefined){
-                    status = 'upcoming,past,proposed,suggested';
-                }
-
                 Events.get(
                     parameters
                 )

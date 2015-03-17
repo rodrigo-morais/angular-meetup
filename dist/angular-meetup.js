@@ -504,10 +504,6 @@ angular.module('rmMeetup').run(['$templateCache', function($templateCache) {
                     };
                 }
 
-                if(status === null || status === undefined){
-                    status = 'upcoming,past,proposed,suggested';
-                }
-
                 Events.get(
                     parameters
                 )
