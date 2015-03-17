@@ -203,3 +203,15 @@ function meetupontroller($scope, rmMeetupRSVPsService){
     }
 };
 ```
+
+## Groups service
+It's a directive to to present groups that exist in Meetup.com. The directive can present the data of groups in format of list or table. To use this directive is necessary inform the access token and one form to find the groups data.
+The form of filter data of group is the same used in groups service using group ID, topic or parameters. Go to <a href="angular-meetup#groups-service">Groups services</a> to see details about how work with these filters.
+
+```sh
+<rm-meetup-groups
+    access-token={{token}}
+    topic = 'AngularJS'
+>
+</rm-meetup-groups>
+```
