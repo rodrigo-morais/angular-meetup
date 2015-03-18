@@ -240,3 +240,11 @@ There some parameters that could be informed to configure the group directive.
 >
 </rm-meetup-groups>
 ```
+
+- Styling the table
+  When the type of presentation is a table is possible change the style using some CSS classes.
+
+  - groupHeaderLine -> is the line of header in table;
+  - <name of field>Label -> each column in line of header. The class is the name of the field with Label word. For example, if field is "name" then the class is "nameLabel";
+  - groupBodyLine -> is the line of body in table;
+  - <name of field>Value -> each column in line of body. The class is the name of the field with word Value. For example, if field is "name" then the class is "nameValue";
