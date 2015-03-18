@@ -248,3 +248,48 @@ There some parameters that could be informed to configure the group directive.
   - <name of field>Label -> each column in line of header. The class is the name of the field with Label word. For example, if field is "name" then the class is "nameLabel";
   - groupBodyLine -> is the line of body in table;
   - <name of field>Value -> each column in line of body. The class is the name of the field with word Value. For example, if field is "name" then the class is "nameValue";
+
+## Events directive
+It's a directive to to present events that exist in Meetup.com. The directive can present the data of events in format of list or table. To use this directive is necessary inform the access token and one form to find the events data.
+The form of filter data of event is the same used in events service using group ID, event ID or parameters. Go to <a href="https://github.com/rodrigo-morais/angular-meetup#events-service">Events services</a> to see details about how work with these filters.
+
+```sh
+<rm-meetup-events
+    access-token={{token}}
+    event-id = '220273617'
+>
+</rm-meetup-events>
+```
+
+There some parameters that could be informed to configure the event directive.
+
+- type -> the type parameter is used to inform how data will be presented. There are two possible options: list and table. The standard is list. When type is equal a list then the directive will present a list of events showing the name of each one. When the type is equal a table then the directive will present a table with data of events with two columns where the first one will be the event ID and the last one will be the name of event.
+
+```sh
+<rm-meetup-events
+    access-token={{token}}
+    parameters=parameters
+    type='table'
+>
+</rm-meetup-events>
+```
+
+- fields -> the fields parameter is used together with type parameter when this is equal a table. In this case the user can choose how fields will be presented in table, informing each field in fields parameter. The fields that are acceptable are detailed in address http://www.meetup.com/meetup_api/docs/2/events/ in response section.
+
+```sh
+<rm-meetup-events
+    access-token={{token}}
+    parameters=parameters
+    type='table'
+    fields=eventFields
+>
+</rm-meetup-events>
+```
+
+- Styling the table
+  When the type of presentation is a table is possible change the style using some CSS classes.
+
+  - eventHeaderLine -> is the line of header in table;
+  - <name of field>Label -> each column in line of header. The class is the name of the field with Label word. For example, if field is "name" then the class is "nameLabel";
+  - eventBodyLine -> is the line of body in table;
+  - <name of field>Value -> each column in line of body. The class is the name of the field with word Value. For example, if field is "name" then the class is "nameValue";
