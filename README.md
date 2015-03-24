@@ -1,5 +1,5 @@
 # angular-meetup
-This component should be use to use Meetup.com login to access a project using Oauth2. With this component is possible show data of logged member, groups, events and RSVP.
+This component should be use to access a project using Oauth2 through of Meetup.com API. With this component is possible show data of logged member, groups, events and RSVP.
 
 [![Build Status](https://travis-ci.org/rodrigo-morais/angular-meetup.svg?branch=master)](https://travis-ci.org/rodrigo-morais/angular-meetup)
 
@@ -10,6 +10,11 @@ To install witn Bower:
 ```sh
 $ bower install angular-meetup --save-dev
 ```
+## Dependencies
+To use this component is necessary loading the components below:
+ - <a href="https://docs.angularjs.org/api/ngSanitize">angular-sanitize</a>
+ - <a href="https://docs.angularjs.org/api/ngResource/service/$resource">angular-resource</a>
+
 ## Oauth login
 It's a directive that can be used to login in some website or project to use user data from Meetup.com API to access it. This directive will wrap the HTML code that will be clicked to call another window to confirm the use of Meetup.com access data to navigate in website or project that using the component as client.
 
