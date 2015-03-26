@@ -19,7 +19,7 @@
         };
 
         var _isAuthorized = function(){
-            var frag = window.location.hash;
+            var frag = window.location.pathname;
             
             if(frag.split('/').length > 1){
                 frag = '#' + frag.split('/')[1];
