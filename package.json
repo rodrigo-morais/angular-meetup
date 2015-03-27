@@ -1,6 +1,6 @@
 {
   "name": "angular-meetup",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "Angular component to authentication with oauth2 using meetup login.",
   "homepage": "https://github.com/rodrigo-morais/angular-meetup",
   "main": "./dist/angular-meetup.js",
