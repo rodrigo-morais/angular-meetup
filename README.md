@@ -10,6 +10,10 @@ To install witn Bower:
 ```sh
 $ bower install angular-meetup --save-dev
 ```
+
+## Example
+<a href="http://rodrigo-morais.github.io/angular-meetup-example">A demonstration how the component should be used.</a>
+
 ## Dependencies
 To use this component is necessary loading the components below:
  - <a href="https://docs.angularjs.org/api/ngSanitize">angular-sanitize</a>
